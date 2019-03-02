@@ -20,5 +20,5 @@ contains :: (Eq a) => a -> [[a]] -> [[a]]
 contains x = filter (elem x)
 
 stringSum :: String -> Int
-stringSum []       = 0
-stringSum l = sum $ map read $ words l
+stringSum [] = 0
+stringSum l  = sum $ map read $ words l

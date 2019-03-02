@@ -10,8 +10,8 @@ randomIntList :: Int -> Int -> Int -> IO [Int]
 randomIntList n from to = take n . randomRs (from, to) <$> newStdGen
 
 remove :: Int -> [a] -> Maybe a
-remove _ []        = Nothing
-remove 0 (x : _) = Just x
+remove _ []       = Nothing
+remove 0 (x : _)  = Just x
 remove k (_ : xs) = remove (k - 1) xs
 
 mergeSort :: Ord a => [a] -> [a]
@@ -27,4 +27,3 @@ mergeSort list     = let len           = length list
     merge l@(x : xs) r@(y : ys)
       | x <= y    = x : merge xs r
       | otherwise = y : merge l ys
-
