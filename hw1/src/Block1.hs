@@ -5,6 +5,11 @@ module Block1
        , stringSum
        ) where
 
+import Prelude
+
+import Data.List (elem, filter, map, replicate, sum, words)
+import Text.Read (read)
+
 order3 :: Ord a => (a, a, a) -> (a, a, a)
 order3 (x, y, z)
   | y < x     = order3(y, x, z)
@@ -13,8 +18,7 @@ order3 (x, y, z)
 
 -- for negative numbers it doesn't replicate element
 smartReplicate :: [Int] -> [Int]
-smartReplicate []       = []
-smartReplicate (x : xs) = replicate x x ++ smartReplicate xs
+smartReplicate = foldr (\x -> (++) (replicate x x)) []
 
 contains :: (Eq a) => a -> [[a]] -> [[a]]
 contains x = filter (elem x)
