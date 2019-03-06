@@ -1,6 +1,7 @@
 module Task7
     ( false
     , second
+    , third
     ) where
 
 import Prelude
@@ -72,3 +73,33 @@ second = let
            result = lambdaTerm list :: [(Integer, Integer)]
 
          in result
+
+third :: Integer -> Bool
+third =
+        let
+            my0 = 0 :: Integer
+            my2 = 2 :: Integer
+            my4 = 4 :: Integer
+            myNot = not :: Bool -> Bool
+            myOr = (||) :: Bool -> Bool -> Bool
+            myMod = mod :: Integer -> Integer -> Integer
+            myEq = (==) :: Integer -> Integer -> Bool
+
+            orNotX = \x -> myOr (myNot x) :: Bool -> Bool
+            myImpl = \x y -> orNotX x y :: Bool
+            mod2 = \x -> myMod x my2 :: Integer
+            eqMod2 = \x -> myEq (mod2 x) :: Integer -> Bool
+            mod4 = \x -> myMod x my4 :: Integer
+            eqMod4 = \x -> myEq (mod4 x) :: Integer -> Bool
+            myIsMod2 = \x -> eqMod2 x my0 :: Bool
+            myIsMod4 = \x -> eqMod4 x my0 :: Bool
+
+            implMod4 = \x -> myImpl (myIsMod4 x) :: Bool -> Bool
+            implMod2 = \x -> implMod4 x (myIsMod2 x) :: Bool
+
+            in implMod2
+
+          -- let impl = \x y -> not x || y in
+          -- let isMod2 = \x -> x `mod` 2 == 0 in
+          -- let isMod4 = \x -> x `mod` 4 == 0 in
+          --   \x -> (isMod4 x) `impl` (isMod2 x)
