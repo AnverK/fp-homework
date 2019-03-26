@@ -18,9 +18,14 @@ tested-with:         GHC == 8.0.1
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Lib
+  exposed-modules:     Block1
+                     , Block2
+                     , Block2_1
+                     , Block3
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
+                     , mtl
+                     , containers
   default-language:    Haskell2010
 
 executable hw2
@@ -29,4 +34,18 @@ executable hw2
   ghc-options:         -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , hw2
+  default-language:    Haskell2010
+
+test-suite hw2-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Main.hs
+  other-modules:       StringSumTest
+                     , EvalTest
+                     , ParserTest
+  build-depends:       base >= 4.9 && < 5
+                     , hw2
+                     , hspec
+                     , QuickCheck
+  ghc-options:         -Wall  -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010

@@ -29,11 +29,11 @@ instance Foldable NonEmpty where
 --------------------------------------------------------------------------------
 
 splitOn :: Eq a => a -> [a] -> NonEmpty [a]
-splitOn el = foldr (splitHelper el) ([] :| [])
+splitOn el = foldr splitHelper ([] :| [])
   where
-    splitHelper :: Eq a => a -> a -> NonEmpty [a] -> NonEmpty [a]
-    splitHelper search curElem (curList :| rest)
-      | search == curElem = [] :| (curList : rest)
+    -- splitHelper :: Eq a => a -> NonEmpty [a] -> NonEmpty [a]
+    splitHelper curElem (curList :| rest)
+      | el == curElem = [] :| (curList : rest)
       | otherwise         = (curElem : curList) :| rest
 
 joinWith :: Eq a => a -> NonEmpty [a] -> [a]
