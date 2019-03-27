@@ -16,7 +16,7 @@ import Prelude
 
 import Control.Applicative (Alternative (..), liftA2)
 import Control.Monad (replicateM)
-import Data.Char (isDigit)
+import Data.Char (isDigit, isSpace)
 
 newtype Parser s a = Parser { runParser :: [s] -> Maybe (a, [s]) }
 
@@ -87,11 +87,12 @@ integer = read <$> (liftA2 (:) (element '-' <|> satisfy isDigit)
 --------------------------------------------------------------------------------
 
 listOfList :: Parser Char [[Int]]
-listOfList = (eof *> Parser (const $ Just ([], "")))
+listOfList = many (satisfy isSpace) *>
+             ((eof *> Parser (const $ Just ([], "")))
          <|> liftA2 (:) (integer >>= intList)
-                        (many (skip *> (integer >>= intList))) <* eof
+                        (many (skip *> (integer >>= intList))) <* eof)
   where
     intList :: Int -> Parser Char [Int]
     intList n = replicateM n (skip *> integer)
     skip :: Parser Char Char
-    skip = many (element ' ') *> element ',' <* many (element ' ')
+    skip = many (satisfy isSpace) *> element ',' <* many (satisfy isSpace)

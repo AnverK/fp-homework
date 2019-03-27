@@ -7,10 +7,10 @@ import Prelude
 import Control.Monad (foldM)
 import Data.List (intercalate)
 import Test.Hspec (SpecWith, describe, it, shouldBe)
-import Test.QuickCheck (property)
+import Test.QuickCheck (Gen, choose, forAll, listOf, property, (===))
 
 import Block3 (Parser (..), balancedSeq, element, eof, listOfList, ok,
- onlyInteger, satisfy, stream)
+  onlyInteger, satisfy, stream)
 
 okTest :: SpecWith ()
 okTest = describe "ok" $ do
@@ -72,13 +72,16 @@ balancedSeqTest = describe "balancedSeq" $ do
     runParser balancedSeq "())()(" `shouldBe` Nothing
 
   it "balance property" $ property $
-    \s -> runParser balancedSeq s `shouldBe`
-          checkZeroBalance (foldM updateBalance 0 s)
+    forAll genParSequence (\s ->
+      runParser balancedSeq s === checkZeroBalance (foldM updateBalance 0 s))
 
   where
+    genParSequence :: Gen String
+    genParSequence = listOf $ choose ('(', ')')
+
     updateBalance :: Int -> Char -> Maybe Int
     updateBalance b c
-      | b <= 0 = Nothing
+      | b < 0 = Nothing
       | otherwise = case c of
         '(' -> Just (b + 1)
         ')' -> Just (b - 1)
