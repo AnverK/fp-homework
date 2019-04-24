@@ -18,24 +18,35 @@ tested-with:         GHC == 8.0.1
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Lib
+  exposed-modules:     BashParser
+                     , BashInterpreter
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
+                     , megaparsec >= 7 && < 8
+                     , containers >= 0.6.0.1 && < 0.6.1
+                     , mtl >= 2.2 && < 2.3
+                     , directory >= 1.3.3 && < 1.3.4
+                     , filepath >= 1.4.2.1 && < 1.4.3
   default-language:    Haskell2010
 
-executable hw3
+executable mini-shell
   hs-source-dirs:      app
-  main-is:             Main.hs
+  main-is:             Shell.hs
   ghc-options:         -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , hw3
+                     , megaparsec >= 7 && < 8
+                     , containers >= 0.6.0.1 && < 0.6.1
+                     , mtl >= 2.2 && < 2.3
+                     , directory >= 1.3.3 && < 1.3.4
+                     , filepath >= 1.4.2.1 && < 1.4.3
   default-language:    Haskell2010
 
-test-suite hw3-test
-  type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
-  main-is:             Spec.hs
-  build-depends:       base
-                     , hw3
-  ghc-options:         -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
-  default-language:    Haskell2010
+-- test-suite hw3-test
+--   type:                exitcode-stdio-1.0
+--   hs-source-dirs:      test
+--   main-is:             Spec.hs
+--   build-depends:       base
+--                      , hw3
+--   ghc-options:         -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
+--   default-language:    Haskell2010
