@@ -12,7 +12,6 @@ import Control.Monad (guard)
 
 import Control.Parallel.Strategies (rpar, parMap)
 
-
 nonSafeScalarProduct :: [Int] -> [Int] -> Int
 nonSafeScalarProduct a b = sum $ zipWith (*) a b
 

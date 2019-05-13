@@ -20,12 +20,15 @@ library
   hs-source-dirs:      src
   exposed-modules:     Main
                      , Task1
+                     , Task2
+                     , Task3
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
                      , parallel >= 3.2.2 && < 3.3
                      , stm >= 2.5 && < 2.6
                      , random >= 1.1 && < 1.2
                      , vector >= 0.12 && < 0.13
+                     , deepseq >= 1.4.4 && < 1.5
   default-language:    Haskell2010
 
 executable hw4
@@ -36,24 +39,25 @@ executable hw4
                      , hw4
                      , random >= 1.1 && < 1.2
   default-language:    Haskell2010
---
+
 test-suite hw4-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
-  main-is:             Spec.hs
-  other-modules:       Task1Test
-  build-depends:       base
+  main-is:             Main.hs
+  other-modules:       MatrixMultiplyTest
+                       GaussTest
+  build-depends:       base >= 4.9 && < 5
                      , hw4
-                     , criterion >= 1.5.4 && < 1.6
-                     , random >= 1.1 && < 1.2
-  ghc-options:         -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
+                     , hspec
+                     , QuickCheck
+                     , matrix
+  ghc-options:         -Wall  -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
 benchmark hw4-bench
   type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
+  hs-source-dirs:      bench
   main-is:             Spec.hs
-  other-modules:       Task1Test
   build-depends:       base
                      , hw4
                      , criterion >= 1.5.4 && < 1.6
