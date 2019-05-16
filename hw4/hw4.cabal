@@ -22,6 +22,7 @@ library
                      , Task1
                      , Task2
                      , Task3
+                     , Task5
   ghc-options:         -Wall
   build-depends:       base >= 4.9 && < 5
                      , parallel >= 3.2.2 && < 3.3
@@ -29,6 +30,9 @@ library
                      , random >= 1.1 && < 1.2
                      , vector >= 0.12 && < 0.13
                      , deepseq >= 1.4.4 && < 1.5
+                     , containers >= 0.6.0.1
+                     , transformers >= 0.5.6.2
+                     , exceptions >= 0.10 && < 0.11
   default-language:    Haskell2010
 
 executable hw4
@@ -38,6 +42,7 @@ executable hw4
   build-depends:       base
                      , hw4
                      , random >= 1.1 && < 1.2
+                     , transformers >= 0.5.6.2
   default-language:    Haskell2010
 
 test-suite hw4-test
@@ -45,7 +50,8 @@ test-suite hw4-test
   hs-source-dirs:      test
   main-is:             Main.hs
   other-modules:       MatrixMultiplyTest
-                       GaussTest
+                     , GeometryTest
+                     , GaussTest
   build-depends:       base >= 4.9 && < 5
                      , hw4
                      , hspec

@@ -4,9 +4,9 @@ module Task2
     , minus
     , scalarProduct
     , crossProduct
-    -- , doubleAreaNaive
+    , doubleAreaNaive
     , doubleArea
-    -- , perimeterNaive
+    , perimeterNaive
     , perimeter
     ) where
 
@@ -34,19 +34,25 @@ scalarProduct (Point ax ay) (Point bx by) = ax * bx + ay * by
 crossProduct :: Point -> Point -> Int
 crossProduct (Point ax ay) (Point bx by) = ax * by - ay * bx
 
-getLength :: (Point, Point) -> Double
-getLength (p1, p2) = let p = minus p1 p2
-                     in sqrt $ fromIntegral $ scalarProduct p p
+getLength :: Point -> Point -> Double
+getLength p1 p2 = let p = minus p1 p2
+                  in sqrt $ fromIntegral $ scalarProduct p p
+
+-- one else thing which should be in naive implementation is non-strict fields for Point
+perimeterNaive :: [Point] -> Double
+perimeterNaive []     = 0
+perimeterNaive points = sum (zipWith getLength points (tail $ cycle points))
 
 perimeter :: [Point] -> Double
-perimeter [] = 0
-perimeter points@(h:xs) = abs $ curry getLength h (last points) +
-                                sum (zipWith (curry getLength) points xs)
+perimeter []            = 0
+perimeter points@(h:xs) = getLength h (last points) +
+                          sum (zipWith getLength points xs)
 
-doubleAreaSerial :: [Point] -> Int
-doubleAreaSerial [] = 0
-doubleAreaSerial points@(h:xs) = abs $ crossProduct h (last points) +
-                                       sum (zipWith crossProduct points xs)
+doubleAreaNaive :: [Point] -> Int
+doubleAreaNaive []     = 0
+doubleAreaNaive points = abs $ sum (zipWith crossProduct points (tail $ cycle points))
 
 doubleArea :: [Point] -> Int
-doubleArea = doubleAreaSerial
+doubleArea []            = 0
+doubleArea points@(h:xs) = abs $ crossProduct h (last points) +
+                                 sum (zipWith crossProduct points xs)
