@@ -37,11 +37,12 @@ packages:
 # - hw1
 # - hw2
 # - hw3
-- hw4
+# - hw4
+- hw5
 # Dependency packages to be pulled from upstream that are not in the resolver
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
-extra-deps: [tasty-hedgehog-0.2.0.0]
+extra-deps: []
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
